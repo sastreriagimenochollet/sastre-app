@@ -20,7 +20,7 @@ export function useClientes() {
   useEffect(() => {
     cargar()
     const canal = supabase
-      .channel('clientes-realtime')
+      .channel(`clientes-realtime-${Math.random().toString(36).slice(2)}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'clientes' }, () => cargar())
       .subscribe()
     return () => supabase.removeChannel(canal)

@@ -23,8 +23,10 @@ export function usePedidos() {
 
     // Suscripción en tiempo real: si cambias algo en el iPad,
     // la compu lo ve reflejado sin recargar la página.
+    // Nombre de canal único por montaje para evitar conflictos
+    // si el componente se vuelve a montar rápido (StrictMode).
     const canal = supabase
-      .channel('pedidos-realtime')
+      .channel(`pedidos-realtime-${Math.random().toString(36).slice(2)}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'pedidos' }, () => {
         cargar()
       })
