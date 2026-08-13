@@ -21,43 +21,43 @@ export const FORMULAS_AMERICANA = [
     key: 'c1_c2',
     label: 'C1-C2',
     formula: 'Pecho / 6 + 1',
-    calcular: (v) => valorValido(v.am_pecho) ? v.am_pecho / 6 + 1 : null,
+    calcular: (v) => valorValido(v.am_pecho) ? Number(v.am_pecho) / 6 + 1 : null,
   },
   {
     key: 'c_c5',
     label: 'C-C5',
     formula: 'Cuadro + 1',
-    calcular: (v) => valorValido(v.am_cuadro) ? v.am_cuadro + 1 : null,
+    calcular: (v) => valorValido(v.am_cuadro) ? Number(v.am_cuadro) + 1 : null,
   },
   {
     key: 'h_h1',
     label: 'H-H1',
     formula: 'Cadera / 3',
-    calcular: (v) => valorValido(v.am_cadera) ? v.am_cadera / 3 : null,
+    calcular: (v) => valorValido(v.am_cadera) ? Number(v.am_cadera) / 3 : null,
   },
   {
     key: 'd4_d5',
     label: 'D4-D5',
     formula: '(Pecho / 6) × 2 + 5',
-    calcular: (v) => valorValido(v.am_pecho) ? (v.am_pecho / 6) * 2 + 5 : null,
+    calcular: (v) => valorValido(v.am_pecho) ? (Number(v.am_pecho) / 6) * 2 + 5 : null,
   },
   {
     key: 'd5_d6',
     label: 'D5-D6',
     formula: 'Pecho / 4 + 5',
-    calcular: (v) => valorValido(v.am_pecho) ? v.am_pecho / 4 + 5 : null,
+    calcular: (v) => valorValido(v.am_pecho) ? Number(v.am_pecho) / 4 + 5 : null,
   },
   {
     key: 'j1_j2',
     label: 'J1-J2',
     formula: 'Pecho / 6 + 2',
-    calcular: (v) => valorValido(v.am_pecho) ? v.am_pecho / 6 + 2 : null,
+    calcular: (v) => valorValido(v.am_pecho) ? Number(v.am_pecho) / 6 + 2 : null,
   },
   {
     key: 'k',
     label: 'K',
     formula: 'Profundidad de sisa / 3 − 2',
-    calcular: (v) => valorValido(v.am_profundidad_sisa) ? v.am_profundidad_sisa / 3 - 2 : null,
+    calcular: (v) => valorValido(v.am_profundidad_sisa) ? Number(v.am_profundidad_sisa) / 3 - 2 : null,
   },
   {
     key: 'h2_h3',
@@ -66,8 +66,9 @@ export const FORMULAS_AMERICANA = [
     // Depende del resultado de H-H1, calculado en el mismo momento.
     calcular: (v) => {
       if (!valorValido(v.am_cadera)) return null
-      const hh1 = v.am_cadera / 3
-      return v.am_cadera - hh1 + 6
+      const cadera = Number(v.am_cadera)
+      const hh1 = cadera / 3
+      return cadera - hh1 + 6
     },
   },
 ]
@@ -107,6 +108,8 @@ function valorValido(v) {
 }
 
 export function formatearResultado(n) {
-  if (n === null || n === undefined) return '—'
-  return Number(n.toFixed(2)).toString()
+  if (n === null || n === undefined || n === '') return '—'
+  const num = Number(n)
+  if (Number.isNaN(num)) return '—'
+  return Number(num.toFixed(2)).toString()
 }
